@@ -1,27 +1,26 @@
 $(document).ready(function() {
+    // univeral vars
     var correct = 0;
     var wrong = 0;
     var noGuess = 0;
     var time = 30;
     var gameOver = false;
     var userHasGuessed = false;
-    var index = 0
     var intervalId;
-
     var clockRunning = false;
     var time = 30;
+    var index = 0;
     var theQuiz = {
         first: {
             question: "What planet does Borderlands 1 and 2 take place on",
             wrong1: "Earth",
             wrong2: "Mars",
             wrong3: "Jakku",
-            correct: "Pandora"
-
-
+            correct: "Pandora",
+            pic: "assets/images/Planet_Pandora.jpg"
         },
         second: {
-            question: "Who is founder of the Crimson Raiders",
+            question: "Who is the founder of the Crimson Raiders",
             correct: "Roland",
             wrong1: "Lilith",
             wrong2: "Handsom Jack",
@@ -37,53 +36,85 @@ $(document).ready(function() {
 
     }
     var theGame = [theQuiz.first, theQuiz.second, theQuiz.third];
-    // console.log(theGame[index].question);
+    $("#timer").text("00:" + time);
+    // start game button 
     $("#start").on("click", function() {
-        setUp();
+            setUp();
+            $("#start").remove();
 
-
-
-    })
-
+        })
+        // set up of each round
     function setUp() {
+
         start();
-        userHasGuessed = false;
+        console.log(index);
+
         const values = Object.values(theGame[index])
         const keys = Object.keys(theGame[index]);
         $("#question").text(theGame[index].question);
-        for (var i = 1; i < values.length; i++) {
+        $("#question").show();
+        for (var i = 1; i < 5; i++) {
+
             var answer = $("<div>");
             answer.addClass("theAnswers");
             answer.attr("id", keys[i]);
             answer.text(values[i]);
             $("#answers").append(answer);
-
-
+            $("#answers").show();
         }
+        //right and wrong actions
         $(".theAnswers").on("click", function() {
-
-
             if (this.id === "correct" && userHasGuessed === false) {
-                userHasGuessed = true;
-                index++
+                var winImg = $("<img>");
+                winImg.addClass("pics");
+                winImg.attr("src", theGame[index].pic);
+                console.log(winImg);
                 stop();
+                $("#answers").hide();
+                $("#question").hide();
+                $("#resultImg").html(winImg);
+                $("#results").html("<br>" + "Yayy you guess corectly " + theGame[index].correct + " is the right answer you will get the next question shortly");
+                userHasGuessed = true;
+                index++;
+                correct++;
+                setTimeout(waitTime, 1000 * 3);
+
+
             }
             if (this.id !== "correct" && userHasGuessed === false) {
                 userHasGuessed = true;
-                console.log(userHasGuessed);
-                index++
+                index++;
+                wrong++;
                 stop();
             }
-
         })
 
-    }
 
+
+    }
+    //what happens after your guess
+    function nextQuestion() {
+        userHasGuessed = false;
+        time = 30;
+        $("#timer").text("00:" + time);
+        $("#answers").empty();
+        $("#resultImg").hide();
+        $("#results").hide();
+        setUp();
+
+    }
+    //time lapse till next question
+    function waitTime() {
+        nextQuestion();
+    }
+    // the timer
     function start() {
         if (!clockRunning) {
             intervalId = setInterval(count, 1000);
             clockRunning = true;
+
         }
+
     }
 
     function stop() {
@@ -95,6 +126,12 @@ $(document).ready(function() {
         time--;
         var converted = timeConverter(time);
         $("#timer").text(converted);
+        if (time === 0) {
+            index++;
+            noGuess++;
+            stop();
+        }
+
     }
 
     function timeConverter(t) {
