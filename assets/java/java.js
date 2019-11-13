@@ -4,7 +4,7 @@ $(document).ready(function() {
     var wrong = 0;
     var noGuess = 0;
     var time = 30;
-    var gameOver = false;
+    // var gameOver = false;
     var userHasGuessed = false;
     var intervalId;
     var clockRunning = false;
@@ -35,60 +35,85 @@ $(document).ready(function() {
         }
 
     }
+
     var theGame = [theQuiz.first, theQuiz.second, theQuiz.third];
-    $("#timer").text("00:" + time);
+
     // start game button 
     $("#start").on("click", function() {
+
             setUp();
-            $("#start").remove();
+            $("#start").hide();
 
         })
         // set up of each round
     function setUp() {
+        if (index < theGame.length) {
+            $("#resultImg").empty();
+            $("#results").empty();
+            $("#timer").text("00:" + time);
+            $("#timer").show();
+            start();
+            console.log("index is " + index);
 
-        start();
-        console.log(index);
+            const values = Object.values(theGame[index])
+            const keys = Object.keys(theGame[index]);
+            $("#question").text(theGame[index].question);
+            $("#question").show();
+            for (var i = 1; i < 5; i++) {
 
-        const values = Object.values(theGame[index])
-        const keys = Object.keys(theGame[index]);
-        $("#question").text(theGame[index].question);
-        $("#question").show();
-        for (var i = 1; i < 5; i++) {
+                var answer = $("<div>");
+                answer.addClass("theAnswers");
+                answer.attr("id", keys[i]);
+                answer.text(values[i]);
+                $("#answers").append(answer);
+                $("#answers").show();
+            }
+            //right and wrong actions
+            $(".theAnswers").on("click", function() {
+                if (this.id === "correct" && userHasGuessed === false) {
+                    var winImg = $("<img>");
+                    winImg.addClass("pics");
+                    winImg.attr("src", theGame[index].pic);
 
-            var answer = $("<div>");
-            answer.addClass("theAnswers");
-            answer.attr("id", keys[i]);
-            answer.text(values[i]);
-            $("#answers").append(answer);
-            $("#answers").show();
+                    stop();
+                    $("#answers").hide();
+                    $("#question").hide();
+                    $("#resultImg").html(winImg);
+                    $("#results").html("<br>" + "Yayy you guess corectly " + theGame[index].correct + " is the right answer");
+                    $("#results").show();
+                    $("#resultImg").show();
+                    userHasGuessed = true;
+                    index++;
+                    correct++;
+                    setTimeout(waitTime, 1000 * 3);
+
+
+                }
+                if (this.id !== "correct" && userHasGuessed === false) {
+                    var loseImg = $("<img>");
+                    loseImg.addClass("pics");
+                    loseImg.attr("src", "assets/images/wrong_guess.jpg");
+                    stop();
+                    $("#answers").hide();
+                    $("#question").hide();
+                    $("#resultImg").html(loseImg);
+                    $("#results").html("WRONGGGGGGGG " + theGame[index].correct + " was the right anwser");
+                    $("#results").show();
+                    $("#resultImg").show();
+                    userHasGuessed = true;
+                    index++;
+                    wrong++;
+                    setTimeout(waitTime, 1000 * 3);
+                    // console.log("wrong is " + wrong);
+
+                }
+
+            })
         }
-        //right and wrong actions
-        $(".theAnswers").on("click", function() {
-            if (this.id === "correct" && userHasGuessed === false) {
-                var winImg = $("<img>");
-                winImg.addClass("pics");
-                winImg.attr("src", theGame[index].pic);
-                console.log(winImg);
-                stop();
-                $("#answers").hide();
-                $("#question").hide();
-                $("#resultImg").html(winImg);
-                $("#results").html("<br>" + "Yayy you guess corectly " + theGame[index].correct + " is the right answer you will get the next question shortly");
-                userHasGuessed = true;
-                index++;
-                correct++;
-                setTimeout(waitTime, 1000 * 3);
+        if (index === theGame.length) {
+            gameOver();
 
-
-            }
-            if (this.id !== "correct" && userHasGuessed === false) {
-                userHasGuessed = true;
-                index++;
-                wrong++;
-                stop();
-            }
-        })
-
+        }
 
 
     }
@@ -98,9 +123,36 @@ $(document).ready(function() {
         time = 30;
         $("#timer").text("00:" + time);
         $("#answers").empty();
-        $("#resultImg").hide();
-        $("#results").hide();
+        $("#resultImg").empty();
+        $("#results").empty();
         setUp();
+
+    }
+
+    function gameOver() {
+        stop();
+        var gameOverPic = $("<img>");
+        gameOverPic.addClass("pics");
+        gameOverPic.attr("src", )
+        $("#start").show();
+        $("#timer").hide();
+        $("#resultImg").empty();
+        $("#results").empty();
+
+        gameOverPic.attr("src", "assets/images/game_over.gif");
+        $("#resultImg").html(gameOverPic);
+        $("#results").html("The times you hit your shot: " + correct + "<br>" +
+            "The times you totally missed your shot: " + wrong + "<br>" + "The times you didnt even shoot your shot: " + noGuess + "<br>" +
+            "Press the start button to try again");
+        $("#results").show();
+        $("#resultImg").show();
+        userHasGuessed = false;
+        time = 30;
+        index = 0;
+        correct = 0;
+        wrong = 0;
+        noGuess = 0;
+
 
     }
     //time lapse till next question
@@ -126,10 +178,27 @@ $(document).ready(function() {
         time--;
         var converted = timeConverter(time);
         $("#timer").text(converted);
-        if (time === 0) {
-            index++;
-            noGuess++;
-            stop();
+        if (index < theGame.length) {
+            if (time === 0) {
+                var outOfTimePic = $("<img>");
+                outOfTimePic.addClass("pics");
+                outOfTimePic.attr("src", "assets/images/to_long.gif");
+                stop();
+                $("#answers").hide();
+                $("#question").hide();
+                $("#resultImg").html(outOfTimePic);
+                $("#results").html("Well the questions wont get any easier so good luck " + "<br>" + theGame[index].correct + " was the right anwser");
+                $("#results").show();
+                $("#resultsImg").show();
+                index++;
+                noGuess++;
+                stop();
+                setTimeout(waitTime, 1000 * 3);
+            }
+            if (index === theGame.length) {
+                gameOver();
+
+            }
         }
 
     }
