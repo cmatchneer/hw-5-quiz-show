@@ -4,11 +4,10 @@ $(document).ready(function() {
     var correct = 0;
     var wrong = 0;
     var noGuess = 0;
-    var time = 30;
+    var time = 10;
     var userHasGuessed = false;
     var intervalId;
     var clockRunning = false;
-    var time = 30;
     var index = 0;
     var theQuiz = [{
             question: "What planet does Borderlands 1 and 2 take place on",
@@ -63,7 +62,7 @@ $(document).ready(function() {
             question: "Which Borderlands game takes places on moon",
             wrong1: "Borderlands",
             wrong2: "Borderlands 2",
-            correct: "Borderlands the Pre-sequel",
+            correct: "The Pre-sequel",
             wrong3: "Borderlands 3",
             pic: "assets/images/pre-sequel.gif"
 
@@ -180,7 +179,7 @@ $(document).ready(function() {
     //what happens after your guess
     function nextQuestion() {
         userHasGuessed = false;
-        time = 30;
+        time = 10;
         $("#timer").text("00:" + time);
         $("#answers").empty();
         $("#resultImg").empty();
@@ -190,6 +189,7 @@ $(document).ready(function() {
     }
 
     function gameOver() {
+        console.log(correct);
         stop();
         var gameOverPic = $("<img>");
         gameOverPic.addClass("pics");
@@ -198,16 +198,35 @@ $(document).ready(function() {
         $("#timer").hide();
         $("#resultImg").empty();
         $("#results").empty();
-
-        gameOverPic.attr("src", "assets/images/game_over.gif");
-        $("#resultImg").html(gameOverPic);
-        $("#results").html("The times you hit your shot: " + correct + "<br>" +
-            "The times you totally missed your shot: " + wrong + "<br>" + "The times you didnt even shoot your shot: " + noGuess + "<br>" +
-            "Press the start button to try again");
-        $("#results").show();
-        $("#resultImg").show();
+        if (correct > wrong && correct > noGuess) {
+            gameOverPic.attr("src", "assets/images/game_over.gif");
+            $("#resultImg").html(gameOverPic);
+            $("#results").html("You got over 50 precent of the questions right you need a life outside of Borderlands" + "<br>" + "The times you hit your shot: " + correct + "<br>" +
+                "The times you totally missed your shot: " + wrong + "<br>" + "The times you didnt even shoot your shot: " + noGuess + "<br>" +
+                "Press the start button to try again");
+            $("#results").show();
+            $("#resultImg").show();
+        }
+        if (wrong > correct && wrong > noGuess) {
+            gameOverPic.attr("src", "assets/images/gameover_bad.gif");
+            $("#resultImg").html(gameOverPic);
+            $("#results").html("You got more then half wrong you need less of a life and more Borderlands" + "<br>" + "The times you hit your shot: " + correct + "<br>" +
+                "The times you totally missed your shot: " + wrong + "<br>" + "The times you didnt even shoot your shot: " + noGuess + "<br>" +
+                "Press the start button to try again");
+            $("#results").show();
+            $("#resultImg").show();
+        }
+        if (noGuess > wrong && noGuess > correct) {
+            gameOverPic.attr("src", "assets/images/gameover_noguess.gif");
+            $("#resultImg").html(gameOverPic);
+            $("#results").html("I mean you cant win if you dont play you may as well try" + "<br>" + "The times you hit your shot: " + correct + "<br>" +
+                "The times you totally missed your shot: " + wrong + "<br>" + "The times you didnt even shoot your shot: " + noGuess + "<br>" +
+                "Press the start button to try again");
+            $("#results").show();
+            $("#resultImg").show();
+        }
         userHasGuessed = false;
-        time = 30;
+        time = 10;
         index = 0;
         correct = 0;
         wrong = 0;

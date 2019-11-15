@@ -48,6 +48,7 @@ body {
 
 #results {
     position: relative;
+    padding: 2px;
     text-align: center;
     background-color: black;
     border: 2px white solid;
