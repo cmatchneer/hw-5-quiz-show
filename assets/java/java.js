@@ -16,21 +16,23 @@ $(document).ready(function() {
             wrong2: "Mars",
             wrong3: "Jakku",
             correct: "Pandora",
-            pic: "assets/images/Planet_Pandora.jpg"
+            pic: "assets/images/pandora.webp"
         },
         {
             question: "Who is the founder of the Crimson Raiders",
             correct: "Roland",
             wrong1: "Lilith",
             wrong2: "Handsom Jack",
-            wrong3: "Commandant Steele"
+            wrong3: "Athena",
+            pic: "assets/images/roland.webp"
         },
         {
             question: "Who's famous line is No Refunds",
             wrong1: "Dr.Zed",
             correct: "Marcus",
             wrong2: "Moxi",
-            wrong3: "Skeeter"
+            wrong3: "Skeeter",
+            pic: "assets/images/marcus.gif"
         },
         {
             question: "Who is the FireHawk",
@@ -54,37 +56,41 @@ $(document).ready(function() {
             correct: "Orange",
             wrong1: "White",
             wrong2: "Blue",
-            wrong3: "Green"
+            wrong3: "Green",
+            pic: "assets/images/guns.gif"
         },
         {
             question: "Which Borderlands game takes places on moon",
             wrong1: "Borderlands",
             wrong2: "Borderlands 2",
-            correct: "Borderlands the Prequel Sequel",
-            wrong3: "Borderlands 3"
+            correct: "Borderlands the Pre-sequel",
+            wrong3: "Borderlands 3",
+            pic: "assets/images/pre-sequel.gif"
 
         },
         {
-            question: "Which company did Handsome Jack run",
-            wrong1: "Dahl",
-            correct: "Hyperion",
-            wrong2: "Jakobs",
-            wrong3: "Tediore"
+            question: "Who ran Hyperion in Borderlands 2",
+            wrong1: "Tannis",
+            correct: "Handsome Jack",
+            wrong2: "Tiny Tina",
+            wrong3: "Flak",
+            pic: "assets/images/jack.gif"
         },
         {
             question: "Who really loves weapons that shoot exploding bullets",
             wrong1: "Typhon Deleon",
             wrong2: "Ellie",
             wrong3: "Hammerlock",
-            correct: "Mr.Torgue"
+            correct: "Mr.Torgue",
+            pic: "assets/images/torgue.gif"
         },
         {
             question: "Whos is super general of the Crimsion Raiders savior of Pandora and the galaxies greatest hero",
+            wrong1: "The ",
+            wrong2: "One and",
+            wrong3: "Only",
             correct: "CLAP TRAP",
-            correct: "CLAP TRAP",
-            correct: "CLAP TRAP",
-            correct: "CLAP TRAP",
-            pic: "assets/images/clap_trap.webp"
+            pic: "assets/images/clap_trap.gif"
 
         }
     ]
@@ -96,7 +102,7 @@ $(document).ready(function() {
     $("#start").on("click", function() {
 
             setUp();
-            $("#start").hide();
+            $("#buttons").hide();
 
         })
         // set up of each round
@@ -188,7 +194,7 @@ $(document).ready(function() {
         var gameOverPic = $("<img>");
         gameOverPic.addClass("pics");
         gameOverPic.attr("src", )
-        $("#start").show();
+        $("#buttons").show();
         $("#timer").hide();
         $("#resultImg").empty();
         $("#results").empty();

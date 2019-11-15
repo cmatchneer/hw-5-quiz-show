@@ -10,7 +10,8 @@ body {
     text-align: center;
     float: left;
     margin: 20px;
-    padding: 5px;
+    padding: 7px;
+    border: 2px black solid;
 }
 
 .pics {
@@ -19,7 +20,18 @@ body {
     margin: 0 auto;
 }
 
+#buttons {
+    position: relative;
+    height: 40px;
+    /* margin-bottom: 10px; */
+}
+
+#start {
+    position: absolute;
+}
+
 #question {
+    position: relative;
     text-align: center;
     background-color: black;
     border: 2px white solid;
@@ -28,15 +40,21 @@ body {
 }
 
 #timer {
+    position: relative;
     margin-left: 25px;
     padding-left: 35px;
     color: red;
 }
 
 #results {
+    position: relative;
     text-align: center;
     background-color: black;
     border: 2px white solid;
     color: white;
     margin-left: 70px;
+}
+
+#resultsImg {
+    position: relative;
 }
