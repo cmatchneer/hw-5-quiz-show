@@ -1,6 +1,42 @@
+body {
+    background-image: url("../images/background.jpg");
+}
+
 .theAnswers {
-    width: 80px;
-    height: 40px;
+    width: 150px;
+    height: 50px;
     background: red;
     margin: 20px auto;
+    text-align: center;
+    float: left;
+    margin: 20px;
+    padding: 5px;
+}
+
+.pics {
+    width: 540px;
+    height: 540px;
+    margin: 0 auto;
+}
+
+#question {
+    text-align: center;
+    background-color: black;
+    border: 2px white solid;
+    color: white;
+    margin-right: 50px;
+}
+
+#timer {
+    margin-left: 25px;
+    padding-left: 35px;
+    color: red;
+}
+
+#results {
+    text-align: center;
+    background-color: black;
+    border: 2px white solid;
+    color: white;
+    margin-left: 70px;
 }

@@ -1,17 +1,16 @@
 $(document).ready(function() {
     // univeral vars
+    var sound = document.createElement('audio');
     var correct = 0;
     var wrong = 0;
     var noGuess = 0;
     var time = 30;
-    // var gameOver = false;
     var userHasGuessed = false;
     var intervalId;
     var clockRunning = false;
     var time = 30;
     var index = 0;
-    var theQuiz = {
-        first: {
+    var theQuiz = [{
             question: "What planet does Borderlands 1 and 2 take place on",
             wrong1: "Earth",
             wrong2: "Mars",
@@ -19,25 +18,80 @@ $(document).ready(function() {
             correct: "Pandora",
             pic: "assets/images/Planet_Pandora.jpg"
         },
-        second: {
+        {
             question: "Who is the founder of the Crimson Raiders",
             correct: "Roland",
             wrong1: "Lilith",
             wrong2: "Handsom Jack",
             wrong3: "Commandant Steele"
         },
-        third: {
+        {
             question: "Who's famous line is No Refunds",
             wrong1: "Dr.Zed",
             correct: "Marcus",
             wrong2: "Moxi",
             wrong3: "Skeeter"
+        },
+        {
+            question: "Who is the FireHawk",
+            correct: "Lilith",
+            wrong1: "Brick",
+            wrong2: "Guage",
+            wrong3: "Zero",
+            pic: "assets/images/lilith.gif"
+
+        },
+        {
+            question: "How many sirens can exist at one time?",
+            wrong1: "2",
+            wrong2: "10",
+            correct: "6",
+            wrong3: "12",
+            pic: "assets/images/siren.webp"
+        },
+        {
+            question: "What color are legendary guns",
+            correct: "Orange",
+            wrong1: "White",
+            wrong2: "Blue",
+            wrong3: "Green"
+        },
+        {
+            question: "Which Borderlands game takes places on moon",
+            wrong1: "Borderlands",
+            wrong2: "Borderlands 2",
+            correct: "Borderlands the Prequel Sequel",
+            wrong3: "Borderlands 3"
+
+        },
+        {
+            question: "Which company did Handsome Jack run",
+            wrong1: "Dahl",
+            correct: "Hyperion",
+            wrong2: "Jakobs",
+            wrong3: "Tediore"
+        },
+        {
+            question: "Who really loves weapons that shoot exploding bullets",
+            wrong1: "Typhon Deleon",
+            wrong2: "Ellie",
+            wrong3: "Hammerlock",
+            correct: "Mr.Torgue"
+        },
+        {
+            question: "Whos is super general of the Crimsion Raiders savior of Pandora and the galaxies greatest hero",
+            correct: "CLAP TRAP",
+            correct: "CLAP TRAP",
+            correct: "CLAP TRAP",
+            correct: "CLAP TRAP",
+            pic: "assets/images/clap_trap.webp"
+
         }
+    ]
 
-    }
 
-    var theGame = [theQuiz.first, theQuiz.second, theQuiz.third];
-
+    $("#results").hide();
+    $("#question").hide();
     // start game button 
     $("#start").on("click", function() {
 
@@ -47,17 +101,17 @@ $(document).ready(function() {
         })
         // set up of each round
     function setUp() {
-        if (index < theGame.length) {
+        if (index < theQuiz.length) {
             $("#resultImg").empty();
-            $("#results").empty();
+            $("#results").hide();
             $("#timer").text("00:" + time);
             $("#timer").show();
             start();
             console.log("index is " + index);
 
-            const values = Object.values(theGame[index])
-            const keys = Object.keys(theGame[index]);
-            $("#question").text(theGame[index].question);
+            const values = Object.values(theQuiz[index])
+            const keys = Object.keys(theQuiz[index]);
+            $("#question").text(theQuiz[index].question);
             $("#question").show();
             for (var i = 1; i < 5; i++) {
 
@@ -73,13 +127,13 @@ $(document).ready(function() {
                 if (this.id === "correct" && userHasGuessed === false) {
                     var winImg = $("<img>");
                     winImg.addClass("pics");
-                    winImg.attr("src", theGame[index].pic);
+                    winImg.attr("src", theQuiz[index].pic);
 
                     stop();
                     $("#answers").hide();
                     $("#question").hide();
                     $("#resultImg").html(winImg);
-                    $("#results").html("<br>" + "Yayy you guess corectly " + theGame[index].correct + " is the right answer");
+                    $("#results").html("Yayy you guess correctly " + theQuiz[index].correct + " is the right answer");
                     $("#results").show();
                     $("#resultImg").show();
                     userHasGuessed = true;
@@ -92,12 +146,12 @@ $(document).ready(function() {
                 if (this.id !== "correct" && userHasGuessed === false) {
                     var loseImg = $("<img>");
                     loseImg.addClass("pics");
-                    loseImg.attr("src", "assets/images/wrong_guess.jpg");
+                    loseImg.attr("src", "assets/images/wrong_guess.webp");
                     stop();
                     $("#answers").hide();
                     $("#question").hide();
                     $("#resultImg").html(loseImg);
-                    $("#results").html("WRONGGGGGGGG " + theGame[index].correct + " was the right anwser");
+                    $("#results").html("WRONGGGGGGGG " + theQuiz[index].correct + " was the right anwser");
                     $("#results").show();
                     $("#resultImg").show();
                     userHasGuessed = true;
@@ -110,7 +164,7 @@ $(document).ready(function() {
 
             })
         }
-        if (index === theGame.length) {
+        if (index === theQuiz.length) {
             gameOver();
 
         }
@@ -178,7 +232,7 @@ $(document).ready(function() {
         time--;
         var converted = timeConverter(time);
         $("#timer").text(converted);
-        if (index < theGame.length) {
+        if (index < theQuiz.length) {
             if (time === 0) {
                 var outOfTimePic = $("<img>");
                 outOfTimePic.addClass("pics");
@@ -187,7 +241,7 @@ $(document).ready(function() {
                 $("#answers").hide();
                 $("#question").hide();
                 $("#resultImg").html(outOfTimePic);
-                $("#results").html("Well the questions wont get any easier so good luck " + "<br>" + theGame[index].correct + " was the right anwser");
+                $("#results").html("Well the questions wont get any easier so good luck " + "<br>" + theQuiz[index].correct + " was the right anwser");
                 $("#results").show();
                 $("#resultsImg").show();
                 index++;
@@ -195,7 +249,7 @@ $(document).ready(function() {
                 stop();
                 setTimeout(waitTime, 1000 * 3);
             }
-            if (index === theGame.length) {
+            if (index === theQuiz.length) {
                 gameOver();
 
             }
