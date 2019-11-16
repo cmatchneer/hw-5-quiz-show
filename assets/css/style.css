@@ -23,7 +23,7 @@ body {
 
 #start {
     position: absolute;
-    box-shadow: 0 20px 8px black;
+    box-shadow: 0 5px 8px black;
 }
 
 #start {
@@ -67,6 +67,7 @@ body {
     border: 2px white solid;
     color: white;
     margin-left: 70px;
+    margin-top: 10px;
 }
 
 #resultsImg {
