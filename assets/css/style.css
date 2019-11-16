@@ -1,5 +1,6 @@
 body {
     background-image: url("../images/background.jpg");
+    font-family: 'Merriweather Sans', sans-serif;
 }
 
 .theAnswers {
@@ -14,6 +15,7 @@ body {
     border: 2px black solid;
     cursor: pointer;
     box-shadow: 0 5px 8px black;
+    font-family: 'Tomorrow', sans-serif;
 }
 
 .theAnswers:active {
@@ -50,6 +52,7 @@ body {
     border: 2px white solid;
     color: white;
     margin-right: 50px;
+    font-family: 'Tomorrow', sans-serif;
 }
 
 #timer {
@@ -68,6 +71,7 @@ body {
     color: white;
     margin-left: 70px;
     margin-top: 10px;
+    font-family: 'Tomorrow', sans-serif;
 }
 
 #resultsImg {
