@@ -100,7 +100,6 @@ $(document).ready(function() {
             audio: "assets/audio/claptrap.m4a"
 
         }
-
     ]
     $("#results").hide();
     $("#question").hide();
@@ -151,14 +150,9 @@ $(document).ready(function() {
                 $("#answers").show();
             }
         }
-
-
-
         //right and wrong actions
         $(".theAnswers").on("click", function() {
-
             if (index === theQuiz.length - 1) {
-
                 var winImg = $("<img>");
                 winImg.addClass("pics");
                 winImg.attr("src", theQuiz[index].pic);
@@ -175,10 +169,7 @@ $(document).ready(function() {
                 index++;
                 correct++;
                 setTimeout(endTime, 1000 * 6);
-
             }
-
-
             if (this.id === "correct" && userHasGuessed === false) {
                 var winImg = $("<img>");
                 winImg.addClass("pics");
@@ -196,8 +187,6 @@ $(document).ready(function() {
                 index++;
                 correct++;
                 setTimeout(waitTime, 1000 * 6);
-
-
             }
             if (this.id !== "correct" && userHasGuessed === false) {
                 var loseImg = $("<img>");
@@ -216,18 +205,9 @@ $(document).ready(function() {
                 index++;
                 wrong++;
                 setTimeout(waitTime, 1000 * 6);
-                // console.log("wrong is " + wrong);
-
             }
-
-
         })
-
-
-
     }
-
-
     //what happens after your guess
     function nextQuestion() {
         userHasGuessed = false;
@@ -237,11 +217,9 @@ $(document).ready(function() {
         $("#resultImg").empty();
         $("#results").empty();
         setUp();
-
     }
-
+    //ends the game and then resets it when button is pressed
     function gameOver() {
-
         stop();
         var gameOverPic = $("<img>");
         gameOverPic.addClass("pics");
@@ -314,7 +292,7 @@ $(document).ready(function() {
         clearInterval(intervalId);
         clockRunning = false;
     }
-
+    // what occurs when the timer runs out
     function count() {
         time--;
         var converted = timeConverter(time);
@@ -322,7 +300,6 @@ $(document).ready(function() {
         if (index < theQuiz.length) {
             if (time === 0) {
                 if (index === theQuiz.length - 1) {
-
                     var outOfTimePic = $("<img>");
                     sound.setAttribute("src", "assets/audio/noguess.m4a");
                     outOfTimePic.addClass("pics");
@@ -359,10 +336,7 @@ $(document).ready(function() {
                     setTimeout(waitTime, 1000 * 6);
                 }
             }
-
-
         }
-
     }
 
     function timeConverter(t) {
@@ -371,17 +345,11 @@ $(document).ready(function() {
         if (seconds < 10) {
             seconds = "0" + seconds;
         }
-
         if (minutes === 0) {
             minutes = "00";
         } else if (minutes < 10) {
             minutes = "0" + minutes;
         }
-
         return minutes + ":" + seconds;
     }
-
-
-
-
 })
