@@ -10,12 +10,24 @@ $(document).ready(function() {
     var clockRunning = false;
     var index = 0;
     var theQuiz = [{
+
+            question: "Whos is super general of the Crimsion Raiders savior of Pandora and the galaxies greatest hero",
+            correct: "CLAP TRAP",
+            correct: "CLAP TRAP",
+            correct: "CLAP TRAP",
+            correct: "CLAP TRAP",
+            pic: "assets/images/clap_trap.gif",
+            audio: "assets/audio/claptrap.m4a"
+
+        },
+        {
             question: "What planet does Borderlands 1 and 2 take place on",
             wrong1: "Earth",
             wrong2: "Mars",
             wrong3: "Jakku",
             correct: "Pandora",
-            pic: "assets/images/pandora.webp"
+            pic: "assets/images/pandora.webp",
+            audio: "assets/audio/pandora.m4a"
         },
         {
             question: "Who is the founder of the Crimson Raiders",
@@ -23,15 +35,17 @@ $(document).ready(function() {
             wrong1: "Lilith",
             wrong2: "Handsom Jack",
             wrong3: "Athena",
-            pic: "assets/images/roland.webp"
+            pic: "assets/images/roland.webp",
+            audio: "assets/audio/roland.m4a"
         },
         {
             question: "Who's famous line is No Refunds",
             wrong1: "Dr.Zed",
             correct: "Marcus",
             wrong2: "Moxi",
-            wrong3: "Skeeter",
-            pic: "assets/images/marcus.gif"
+            wrong3: "Scooter",
+            pic: "assets/images/marcus.gif",
+            audio: "assets/audio/marcus.m4a"
         },
         {
             question: "Who is the FireHawk",
@@ -39,7 +53,8 @@ $(document).ready(function() {
             wrong1: "Brick",
             wrong2: "Guage",
             wrong3: "Zero",
-            pic: "assets/images/lilith.gif"
+            pic: "assets/images/lilith.gif",
+            audio: "assets/audio/lilith.m4a"
 
         },
         {
@@ -48,7 +63,8 @@ $(document).ready(function() {
             wrong2: "10",
             correct: "6",
             wrong3: "12",
-            pic: "assets/images/siren.webp"
+            pic: "assets/images/siren.webp",
+            audio: "assets/audio/siren.m4a"
         },
         {
             question: "What color are legendary guns",
@@ -56,7 +72,8 @@ $(document).ready(function() {
             wrong1: "White",
             wrong2: "Blue",
             wrong3: "Green",
-            pic: "assets/images/guns.gif"
+            pic: "assets/images/guns.gif",
+            audio: "assets/audio/guns.m4a"
         },
         {
             question: "Which Borderlands game takes places on moon",
@@ -64,7 +81,8 @@ $(document).ready(function() {
             wrong2: "Borderlands 2",
             correct: "The Pre-sequel",
             wrong3: "Borderlands 3",
-            pic: "assets/images/pre-sequel.gif"
+            pic: "assets/images/pre-sequel.gif",
+            audio: "assets/audio/moon.m4a"
 
         },
         {
@@ -73,7 +91,8 @@ $(document).ready(function() {
             correct: "Handsome Jack",
             wrong2: "Tiny Tina",
             wrong3: "Flak",
-            pic: "assets/images/jack.gif"
+            pic: "assets/images/jack.gif",
+            audio: "assets/audio/jack.m4a"
         },
         {
             question: "Who really loves weapons that shoot exploding bullets",
@@ -81,17 +100,10 @@ $(document).ready(function() {
             wrong2: "Ellie",
             wrong3: "Hammerlock",
             correct: "Mr.Torgue",
-            pic: "assets/images/torgue.gif"
-        },
-        {
-            question: "Whos is super general of the Crimsion Raiders savior of Pandora and the galaxies greatest hero",
-            wrong1: "The ",
-            wrong2: "One and",
-            wrong3: "Only",
-            correct: "CLAP TRAP",
-            pic: "assets/images/clap_trap.gif"
-
+            pic: "assets/images/torgue.gif",
+            audio: "assets/audio/torgue.m4a"
         }
+
     ]
 
 
@@ -106,21 +118,39 @@ $(document).ready(function() {
         })
         // set up of each round
     function setUp() {
-        if (index < theQuiz.length) {
+        var answer;
+        if (index === 0) {
             $("#resultImg").empty();
             $("#results").hide();
             $("#timer").text("00:" + time);
             $("#timer").show();
             start();
-            console.log("index is " + index);
+            // const values = Object.values(theQuiz[index])
+            // const keys = Object.keys(theQuiz[index]);
+            $("#question").text(theQuiz[index].question);
+            $("#question").show();
 
+            for (var j = 0; j < 4; j++) {
+                answer = $("<div>");
+                answer.addClass("theAnswers");
+                answer.attr("id", "correct");
+                answer.text(theQuiz[index].correct);
+                $("#answers").append(answer);
+                $("#answers").show();
+            }
+        }
+        if (index < theQuiz.length && index > 0) {
+            $("#resultImg").empty();
+            $("#results").hide();
+            $("#timer").text("00:" + time);
+            $("#timer").show();
+            start();
             const values = Object.values(theQuiz[index])
             const keys = Object.keys(theQuiz[index]);
             $("#question").text(theQuiz[index].question);
             $("#question").show();
             for (var i = 1; i < 5; i++) {
-
-                var answer = $("<div>");
+                answer = $("<div>");
                 answer.addClass("theAnswers");
                 answer.attr("id", keys[i]);
                 answer.text(values[i]);
@@ -133,7 +163,7 @@ $(document).ready(function() {
                     var winImg = $("<img>");
                     winImg.addClass("pics");
                     winImg.attr("src", theQuiz[index].pic);
-
+                    sound.setAttribute("src", theQuiz[index].audio);
                     stop();
                     $("#answers").hide();
                     $("#question").hide();
@@ -141,10 +171,11 @@ $(document).ready(function() {
                     $("#results").html("Yayy you guess correctly " + theQuiz[index].correct + " is the right answer");
                     $("#results").show();
                     $("#resultImg").show();
+                    sound.play();
                     userHasGuessed = true;
                     index++;
                     correct++;
-                    setTimeout(waitTime, 1000 * 3);
+                    setTimeout(waitTime, 1000 * 6);
 
 
                 }
@@ -152,6 +183,7 @@ $(document).ready(function() {
                     var loseImg = $("<img>");
                     loseImg.addClass("pics");
                     loseImg.attr("src", "assets/images/wrong_guess.webp");
+                    sound.setAttribute("src", "assets/audio/wrongguess.m4a");
                     stop();
                     $("#answers").hide();
                     $("#question").hide();
@@ -159,10 +191,11 @@ $(document).ready(function() {
                     $("#results").html("WRONGGGGGGGG " + theQuiz[index].correct + " was the right anwser");
                     $("#results").show();
                     $("#resultImg").show();
+                    sound.play();
                     userHasGuessed = true;
                     index++;
                     wrong++;
-                    setTimeout(waitTime, 1000 * 3);
+                    setTimeout(waitTime, 1000 * 6);
                     // console.log("wrong is " + wrong);
 
                 }
@@ -200,26 +233,32 @@ $(document).ready(function() {
         $("#results").empty();
         if (correct > wrong && correct > noGuess) {
             gameOverPic.attr("src", "assets/images/game_over.gif");
+            sound.setAttribute("src", "assets/audio/goodending.m4a");
+            sound.play();
             $("#resultImg").html(gameOverPic);
-            $("#results").html("You got over 50 precent of the questions right you need a life outside of Borderlands" + "<br>" + "The times you hit your shot: " + correct + "<br>" +
+            $("#results").html("You got so many questions right you need a life outside of Borderlands" + "<br>" + "The times you hit your shot: " + correct + "<br>" +
                 "The times you totally missed your shot: " + wrong + "<br>" + "The times you didnt even shoot your shot: " + noGuess + "<br>" +
                 "Press the start button to try again");
             $("#results").show();
             $("#resultImg").show();
         }
         if (wrong > correct && wrong > noGuess) {
+            sound.setAttribute("src", "assets/audio/badending.m4a");
+            sound.play();
             gameOverPic.attr("src", "assets/images/gameover_bad.gif");
             $("#resultImg").html(gameOverPic);
-            $("#results").html("You got more then half wrong you need less of a life and more Borderlands" + "<br>" + "The times you hit your shot: " + correct + "<br>" +
+            $("#results").html("You got so many wrong so sad you need less of a life and more Borderlands" + "<br>" + "The times you hit your shot: " + correct + "<br>" +
                 "The times you totally missed your shot: " + wrong + "<br>" + "The times you didnt even shoot your shot: " + noGuess + "<br>" +
                 "Press the start button to try again");
             $("#results").show();
             $("#resultImg").show();
         }
         if (noGuess > wrong && noGuess > correct) {
+            sound.setAttribute("src", "assets/audio/noguessending.m4a");
+            sound.play();
             gameOverPic.attr("src", "assets/images/gameover_noguess.gif");
             $("#resultImg").html(gameOverPic);
-            $("#results").html("I mean you cant win if you dont play you may as well try" + "<br>" + "The times you hit your shot: " + correct + "<br>" +
+            $("#results").html("You went AFK there for the whole game huh " + "<br>" + "The times you hit your shot: " + correct + "<br>" +
                 "The times you totally missed your shot: " + wrong + "<br>" + "The times you didnt even shoot your shot: " + noGuess + "<br>" +
                 "Press the start button to try again");
             $("#results").show();
@@ -260,6 +299,7 @@ $(document).ready(function() {
         if (index < theQuiz.length) {
             if (time === 0) {
                 var outOfTimePic = $("<img>");
+                sound.setAttribute("src", "assets/audio/noguess.m4a");
                 outOfTimePic.addClass("pics");
                 outOfTimePic.attr("src", "assets/images/to_long.gif");
                 stop();
@@ -269,10 +309,11 @@ $(document).ready(function() {
                 $("#results").html("Well the questions wont get any easier so good luck " + "<br>" + theQuiz[index].correct + " was the right anwser");
                 $("#results").show();
                 $("#resultsImg").show();
+                sound.play();
                 index++;
                 noGuess++;
                 stop();
-                setTimeout(waitTime, 1000 * 3);
+                setTimeout(waitTime, 1000 * 6);
             }
             if (index === theQuiz.length) {
                 gameOver();
