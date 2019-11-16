@@ -10,17 +10,6 @@ $(document).ready(function() {
     var clockRunning = false;
     var index = 0;
     var theQuiz = [{
-
-            question: "Whos is super general of the Crimsion Raiders savior of Pandora and the galaxies greatest hero",
-            correct: "CLAP TRAP",
-            correct: "CLAP TRAP",
-            correct: "CLAP TRAP",
-            correct: "CLAP TRAP",
-            pic: "assets/images/clap_trap.gif",
-            audio: "assets/audio/claptrap.m4a"
-
-        },
-        {
             question: "What planet does Borderlands 1 and 2 take place on",
             wrong1: "Earth",
             wrong2: "Mars",
@@ -102,16 +91,21 @@ $(document).ready(function() {
             correct: "Mr.Torgue",
             pic: "assets/images/torgue.gif",
             audio: "assets/audio/torgue.m4a"
+        },
+        {
+
+            question: "Who is super general of the Crimsion Raiders savior of Pandora and the galaxies greatest hero",
+            correct: "CLAP TRAP",
+            pic: "assets/images/clap_trap.gif",
+            audio: "assets/audio/claptrap.m4a"
+
         }
 
     ]
-
-
     $("#results").hide();
     $("#question").hide();
     // start game button 
     $("#start").on("click", function() {
-
             setUp();
             $("#buttons").hide();
 
@@ -119,27 +113,7 @@ $(document).ready(function() {
         // set up of each round
     function setUp() {
         var answer;
-        if (index === 0) {
-            $("#resultImg").empty();
-            $("#results").hide();
-            $("#timer").text("00:" + time);
-            $("#timer").show();
-            start();
-            // const values = Object.values(theQuiz[index])
-            // const keys = Object.keys(theQuiz[index]);
-            $("#question").text(theQuiz[index].question);
-            $("#question").show();
-
-            for (var j = 0; j < 4; j++) {
-                answer = $("<div>");
-                answer.addClass("theAnswers");
-                answer.attr("id", "correct");
-                answer.text(theQuiz[index].correct);
-                $("#answers").append(answer);
-                $("#answers").show();
-            }
-        }
-        if (index < theQuiz.length && index > 0) {
+        if (index < theQuiz.length - 1) {
             $("#resultImg").empty();
             $("#results").hide();
             $("#timer").text("00:" + time);
@@ -157,58 +131,103 @@ $(document).ready(function() {
                 $("#answers").append(answer);
                 $("#answers").show();
             }
-            //right and wrong actions
-            $(".theAnswers").on("click", function() {
-                if (this.id === "correct" && userHasGuessed === false) {
-                    var winImg = $("<img>");
-                    winImg.addClass("pics");
-                    winImg.attr("src", theQuiz[index].pic);
-                    sound.setAttribute("src", theQuiz[index].audio);
-                    stop();
-                    $("#answers").hide();
-                    $("#question").hide();
-                    $("#resultImg").html(winImg);
-                    $("#results").html("Yayy you guess correctly " + theQuiz[index].correct + " is the right answer");
-                    $("#results").show();
-                    $("#resultImg").show();
-                    sound.play();
-                    userHasGuessed = true;
-                    index++;
-                    correct++;
-                    setTimeout(waitTime, 1000 * 6);
-
-
-                }
-                if (this.id !== "correct" && userHasGuessed === false) {
-                    var loseImg = $("<img>");
-                    loseImg.addClass("pics");
-                    loseImg.attr("src", "assets/images/wrong_guess.webp");
-                    sound.setAttribute("src", "assets/audio/wrongguess.m4a");
-                    stop();
-                    $("#answers").hide();
-                    $("#question").hide();
-                    $("#resultImg").html(loseImg);
-                    $("#results").html("WRONGGGGGGGG " + theQuiz[index].correct + " was the right anwser");
-                    $("#results").show();
-                    $("#resultImg").show();
-                    sound.play();
-                    userHasGuessed = true;
-                    index++;
-                    wrong++;
-                    setTimeout(waitTime, 1000 * 6);
-                    // console.log("wrong is " + wrong);
-
-                }
-
-            })
         }
-        if (index === theQuiz.length) {
-            gameOver();
+        if (index === theQuiz.length - 1) {
+            console.log("test");
+            $("#resultImg").empty();
+            $("#results").hide();
+            $("#timer").text("00:" + time);
+            $("#timer").show();
+            start();
+            $("#question").text(theQuiz[index].question);
+            $("#question").show();
 
+            for (var j = 0; j < 4; j++) {
+                answer = $("<div>");
+                answer.addClass("theAnswers");
+                answer.attr("data", "correct");
+                answer.text(theQuiz[index].correct);
+                $("#answers").append(answer);
+                $("#answers").show();
+            }
         }
+
+
+
+        //right and wrong actions
+        $(".theAnswers").on("click", function() {
+
+            if (index === theQuiz.length - 1) {
+
+                var winImg = $("<img>");
+                winImg.addClass("pics");
+                winImg.attr("src", theQuiz[index].pic);
+                sound.setAttribute("src", theQuiz[index].audio);
+                stop();
+                $("#answers").empty();
+                $("#question").hide();
+                $("#resultImg").html(winImg);
+                $("#results").html("Yayy you guess correctly " + theQuiz[index].correct + " is the right answer");
+                $("#results").show();
+                $("#resultImg").show();
+                sound.play();
+                userHasGuessed = true;
+                index++;
+                correct++;
+                setTimeout(endTime, 1000 * 6);
+
+            }
+
+
+            if (this.id === "correct" && userHasGuessed === false) {
+                var winImg = $("<img>");
+                winImg.addClass("pics");
+                winImg.attr("src", theQuiz[index].pic);
+                sound.setAttribute("src", theQuiz[index].audio);
+                stop();
+                $("#answers").hide();
+                $("#question").hide();
+                $("#resultImg").html(winImg);
+                $("#results").html("Yayy you guess correctly " + theQuiz[index].correct + " is the right answer");
+                $("#results").show();
+                $("#resultImg").show();
+                sound.play();
+                userHasGuessed = true;
+                index++;
+                correct++;
+                setTimeout(waitTime, 1000 * 6);
+
+
+            }
+            if (this.id !== "correct" && userHasGuessed === false) {
+                var loseImg = $("<img>");
+                loseImg.addClass("pics");
+                loseImg.attr("src", "assets/images/wrong_guess.webp");
+                sound.setAttribute("src", "assets/audio/wrongguess.m4a");
+                stop();
+                $("#answers").hide();
+                $("#question").hide();
+                $("#resultImg").html(loseImg);
+                $("#results").html("WRONGGGGGGGG " + theQuiz[index].correct + " was the right anwser");
+                $("#results").show();
+                $("#resultImg").show();
+                sound.play();
+                userHasGuessed = true;
+                index++;
+                wrong++;
+                setTimeout(waitTime, 1000 * 6);
+                // console.log("wrong is " + wrong);
+
+            }
+
+
+        })
+
 
 
     }
+
+
     //what happens after your guess
     function nextQuestion() {
         userHasGuessed = false;
@@ -222,7 +241,7 @@ $(document).ready(function() {
     }
 
     function gameOver() {
-        console.log(correct);
+
         stop();
         var gameOverPic = $("<img>");
         gameOverPic.addClass("pics");
@@ -277,6 +296,10 @@ $(document).ready(function() {
     function waitTime() {
         nextQuestion();
     }
+
+    function endTime() {
+        gameOver();
+    }
     // the timer
     function start() {
         if (!clockRunning) {
@@ -298,27 +321,46 @@ $(document).ready(function() {
         $("#timer").text(converted);
         if (index < theQuiz.length) {
             if (time === 0) {
-                var outOfTimePic = $("<img>");
-                sound.setAttribute("src", "assets/audio/noguess.m4a");
-                outOfTimePic.addClass("pics");
-                outOfTimePic.attr("src", "assets/images/to_long.gif");
-                stop();
-                $("#answers").hide();
-                $("#question").hide();
-                $("#resultImg").html(outOfTimePic);
-                $("#results").html("Well the questions wont get any easier so good luck " + "<br>" + theQuiz[index].correct + " was the right anwser");
-                $("#results").show();
-                $("#resultsImg").show();
-                sound.play();
-                index++;
-                noGuess++;
-                stop();
-                setTimeout(waitTime, 1000 * 6);
-            }
-            if (index === theQuiz.length) {
-                gameOver();
+                if (index === theQuiz.length - 1) {
 
+                    var outOfTimePic = $("<img>");
+                    sound.setAttribute("src", "assets/audio/noguess.m4a");
+                    outOfTimePic.addClass("pics");
+                    outOfTimePic.attr("src", "assets/images/to_long.gif");
+                    stop();
+                    $("#answers").hide();
+                    $("#question").hide();
+                    $("#resultImg").html(outOfTimePic);
+                    $("#results").html("Well the questions wont get any easier so good luck " + "<br>" + theQuiz[index].correct + " was the right anwser");
+                    $("#results").show();
+                    $("#resultsImg").show();
+                    sound.play();
+                    index++;
+                    noGuess++;
+                    stop();
+                    setTimeout(endTime, 1000 * 6);
+
+                } else {
+                    var outOfTimePic = $("<img>");
+                    sound.setAttribute("src", "assets/audio/noguess.m4a");
+                    outOfTimePic.addClass("pics");
+                    outOfTimePic.attr("src", "assets/images/to_long.gif");
+                    stop();
+                    $("#answers").hide();
+                    $("#question").hide();
+                    $("#resultImg").html(outOfTimePic);
+                    $("#results").html("Well the questions wont get any easier so good luck " + "<br>" + theQuiz[index].correct + " was the right anwser");
+                    $("#results").show();
+                    $("#resultsImg").show();
+                    sound.play();
+                    index++;
+                    noGuess++;
+                    stop();
+                    setTimeout(waitTime, 1000 * 6);
+                }
             }
+
+
         }
 
     }
